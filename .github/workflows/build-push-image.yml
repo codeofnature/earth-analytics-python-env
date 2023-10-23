@@ -1,10 +1,8 @@
 # This build will build and push the image to docker hub upon a commit to the
 # main  branch only
-name: Push to Docker Hub from Main Branch
+name: Push to Docker Hub
 
-on:
-  push:
-    branches: main
+on: workflow_dispatch
 
 jobs:
   build-push-image:
@@ -26,7 +24,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: earthlab/r-python-eds-lessons-env:latest
+          tags: earthlab/earth-analytics-python-env:${GITHUB_REF##*/}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
